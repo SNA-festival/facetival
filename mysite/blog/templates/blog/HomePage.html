@@ -1,0 +1,196 @@
+{% extends 'mysite/base.html' %}
+{% load future %}
+  {% block content %}     
+
+<html lang="en">
+<head>
+  
+  
+ 
+
+<!-- Latest compiled and minified JavaScript -->
+
+{% load staticfiles%}
+    <!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/calendar.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/popstyle.css' %}">
+  <!--<link rel="stylesheet" href="{% static 'css/reset.css' %}">-->
+  <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <script type="text/javascript" src="{% static 'js/jquery.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'js/pop.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+ 	<script type="text/javascript" src="{% static 'js/calendar.1.js' %}" ></script>
+ 	
+  <script type="text/javascript" src="{% static 'js/jquery.imagesloaded.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.wookmark.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/modal.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/post_detail_.js' %}" ></script>
+</head>
+ 
+
+
+</head>
+
+<body>
+	<script type="text/javascript" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	
+ 
+	
+
+  	
+  	
+ {% if posts %} 	
+  	{% for post in posts %}
+  	
+    <p class="post">{{ post.festival_name }}</p>
+    <p class="date">{{ post.set_date }}</p>
+    <p class="file">http://festival-rdia0117-2.c9.io/media/{{ post.docfile }}</p>
+    <p class="articleURL">http://festival-rdia0117-2.c9.io/post/{{ post.pk }}</p>
+    <p class="story">{{ post.festival_story }}</p>
+    
+    {% endfor %}  
+    
+   	{% else %}
+			<p>No documents.</p>
+ {% endif %}
+ 
+ 
+ 
+  
+  <div>
+    <div id="background">
+  		<div id="calendar"></div>
+  	</div>
+    <div class="container"  id="main">
+      <ul id="tiles">
+        <!-- These are our grid blocks -->
+
+        
+      </ul>
+
+    </div>
+    <div id="thisimg"></div>
+    <div id="thisurl"></div>
+<div id="thisdate"></div>
+<div id="thisstory"></div>
+  <div>
+  
+   </div>
+   <div id="backbutton" >
+     <div id="showimg"><a id="back" href="#background" class="scrollup">
+      <span class="glyphicon glyphicon-hand-up"></span>回到月曆</a></div> 
+    </div>
+
+
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="myModalLabel"></h3>
+      </div>
+      <div class="modal-body">
+        <div id="modalcon">
+          <div class="row">
+          <div class="col-md-6">
+            <img id="eventimg" src="" width="400px" height="320px">
+          </div>
+          <div class="col-md-6">
+             <p id=eventtime style="font-weight: 500;"></p>
+            <div><h4 id="asas" style="font-weight: bold; padding-left:5px;">關於節慶的小故事</h4></div>
+            <div><p id="eventstory"></p></div>
+        </div>
+        </div>
+          </div>
+        
+        
+      </div>
+      <div class="modal-footer">
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         
+        <button type="button" class="btn btn-primary" ><a id="modalshare">Share</a></button>
+        
+        <div id="fcs_div_54b652c121845"><a title="free comment script" href="http://www.freecommentscript.com"></a></div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="modal fade" id="addimg" tabindex="-1" role="dialog" aria-labelledby="Modalimg" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="Modalimg">新增節慶</h4>
+        </div>
+        <div class="modal-body">
+          
+           <img id="imgUpload" src="http://en.immostreet.com/Content/img/icon/icon_missing_photo_detail.png" width="420" height="320">
+           {% if documents %}
+    			<ul>
+    			{% for document in documents %}
+    			
+    				<!--<li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>-->
+    				<!--<li><img src="{{ document.docfile.url }}" width="42" height="42"></li>-->
+    				
+    				
+    			{% endfor %}
+    			</ul>
+    		{% else %}
+    		{% endif %}  
+    		
+    	     <form  method="post" enctype="multipart/form-data">
+    	    	{% csrf_token %}
+    	    	<!--<p>{{ formUpload.non_field_errors }} </p>-->
+    	    	<!--<p>{{ formUpload.docfile.label_tag }} {{ formUpload.docfile.help_text }} </p>-->
+    	    	<!--<p>-->
+    	    	<!--    {{ formUpload.docfile.errors }} {{ formUpload.docfile }}  -->
+    	    	<!--</p>-->
+    	    	<p>
+    	    	    
+    	    	</p>
+    	     </form>
+          
+             
+    
+        
+        <form method="POST" class="post-form"  enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_p }}
+    		<div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">Close</button>
+        
+            <button type="submit" name="save" class="save btn btn-primary">Save</button>
+          </div>  
+            
+        </form>
+   
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+       <input type="hidden" id="myVar" name="variable" value="{{ variable }}">    	
+      
+
+
+{% endblock %}         
+
+  
+ 
+    </body>
+</html>
+
+

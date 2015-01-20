@@ -1,0 +1,54 @@
+{% extends 'mysite/base.html' %}
+{% load future %}
+{% block content %}
+{% load staticfiles%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/post_detail_.css' %}">
+<script type="text/javascript" src="{% static 'js/post_detail_.js' %}" ></script>
+<style type="text/css">
+    *{
+        font-family:"微軟正黑體";
+    }
+</style>
+<body>
+    <div class="scroll_b">
+        <div class="panel">
+            <div class="panel_b">
+            <div class="date" id="post_conent">
+                <!--{% if post.published_date %}-->
+                <!--    {{ post.published_date }}-->
+                <!--{% else %}-->
+                <!--    <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>-->
+                <!--{% endif %}-->
+                <!--<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>-->
+                <!--<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>-->
+            </div>
+            <!--<div>-->
+            
+            <div id="eetitle"><h1 style="font-weight:600; color:#004149;" >{{ post.festival_name }}</h1></div>
+            <div class="row" id="con">
+                <div class="col-md-8">
+                <img src="http://festival-rdia0117-2.c9.io/media/{{ post.docfile }}" width="500px" height="autoResize" style="padding-left:20px;">
+                </div>
+                <div class="col-md-4">
+                <h4 style="font-weight:400; color:#31345E;">{{ post.set_date }}</h4>
+                <h3 style="font-weight:bold; color:#111;">關於節慶的小故事</h3>
+                <h4 style="font-weight:400; color:#31345E;">{{ post.festival_story }}</h4>
+                </div>
+            </div>
+                
+            <!--</div>-->
+            <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+            <div class="fb-share-button" data-layout="button" ></div>
+            <!--<div class="fb-like" data-share="true" data-width="450" layout=button_count>-->
+            <!--</div>-->
+            </div>
+            <!--<div class="fb-comments"  data-numposts="5" data-colorscheme="light">-->
+            
+            <div id="fcs_div_54b652c121845"><a title="free comment script" href="http://www.freecommentscript.com"></a></div>
+            
+        </div>
+    </div>
+
+
+</body>
+{% endblock %}
