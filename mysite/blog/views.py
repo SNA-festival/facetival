@@ -12,6 +12,8 @@ from .models import Document
 from .forms import DocumentForm
 from .models import Post
 from .forms import PostForm
+from .models import Userlog
+from .forms import UserlogForm
 
 
     
@@ -132,6 +134,8 @@ def Home(request):
             
             return HttpResponseRedirect("ok!")   
         
+        Userlog = UserlogForm(request.POST)
+        
         #save button
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -144,17 +148,18 @@ def Home(request):
             #return HttpResponseRedirect(reverse(post_detail, kwargs={'pk': post.pk}))
         
         #upload button    
-        formUpload = DocumentForm(request.POST, request.FILES)
-        if formUpload.is_valid():
-            newdoc2 = Document(docfile = request.FILES['docfile'])
-            newdoc2.save()
-            print "mish22"
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(".")    
+        # formUpload = DocumentForm(request.POST, request.FILES)
+        # if formUpload.is_valid():
+        #     newdoc2 = Document(docfile = request.FILES['docfile'])
+        #     newdoc2.save()
+        #     print "mish22"
+        #     # Redirect to the document list after POST
+        #     return HttpResponseRedirect(".")    
             
     else:
         form = PostForm()
-        formUpload = DocumentForm() # A empty, unbound form
+        Userlog = UserlogForm()
+        #formUpload = DocumentForm() # A empty, unbound form
 
     # Load documents for the list page
     #documents = Document.objects.all()
@@ -178,6 +183,6 @@ def Home(request):
  
     return render_to_response(
     'blog/HomePage.html',
-    {'formUpload': formUpload, 'posts': posts, 'form': form},
+    {'Userlog': Userlog, 'posts': posts, 'form': form},
     context_instance=RequestContext(request)
     )

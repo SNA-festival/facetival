@@ -49,8 +49,8 @@
   	
     <p class="post">{{ post.festival_name }}</p>
     <p class="date">{{ post.set_date }}</p>
-    <p class="file">http://festival-rdia0117-2.c9.io/media/{{ post.docfile }}</p>
-    <p class="articleURL">http://festival-rdia0117-2.c9.io/post/{{ post.pk }}</p>
+    <p class="file">http://facetival-mishchen.c9.io/media/{{ post.docfile }}</p>
+    <p class="articleURL">http://facetival-mishchen.c9.io/{{ post.pk }}</p>
     <p class="story">{{ post.festival_story }}</p>
     
     {% endfor %}  
@@ -132,7 +132,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="Modalimg">新增節慶</h4>
+          <h4 class="modal-title" id="Modalimg">新增節慶~~~</h4>
         </div>
         <div class="modal-body">
           
@@ -150,17 +150,17 @@
     		{% else %}
     		{% endif %}  
     		
-    	     <form  method="post" enctype="multipart/form-data">
-    	    	{% csrf_token %}
+    	     <!--<form  method="post" enctype="multipart/form-data">-->
+    	    	<!--{% csrf_token %}-->
     	    	<!--<p>{{ formUpload.non_field_errors }} </p>-->
     	    	<!--<p>{{ formUpload.docfile.label_tag }} {{ formUpload.docfile.help_text }} </p>-->
     	    	<!--<p>-->
     	    	<!--    {{ formUpload.docfile.errors }} {{ formUpload.docfile }}  -->
     	    	<!--</p>-->
-    	    	<p>
+    	    	<!--<p>-->
     	    	    
-    	    	</p>
-    	     </form>
+    	    	<!--</p>-->
+    	     <!--</form>-->
           
              
     
@@ -175,6 +175,33 @@
             
         </form>
    
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="modal fade" id="userlog" tabindex="-1" role="dialog" aria-labelledby="Modalimg" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="Modalimg">登入&登出</h4>
+        </div>
+        <div class="modal-body">
+          
+          <form method="POST" class="post-form"  enctype="multipart/form-data">{% csrf_token %}
+            {{ Userlog.as_p }}
+      		  <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">Close</button>
+          
+              <button type="submit" name="save" class="save btn btn-primary">Save</button>
+            </div>  
+            
+        </form>
+ 
         </div>
         
       </div>

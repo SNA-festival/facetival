@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 #urlpatterns = patterns('',  mish v1 
 urlpatterns = patterns('',
@@ -13,4 +15,4 @@ urlpatterns = patterns('',
     url(r'^post/(?P<pk>[0-9]+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^post/(?P<pk>[0-9]+)/remove/$', views.post_remove, name='post_remove'),
 
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
