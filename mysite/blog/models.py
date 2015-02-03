@@ -33,10 +33,4 @@ class Post(models.Model):
     def __unicode__(self):
         return self.festival_name
         
-class Document(models.Model):
-    
-    #docfile = models.FileField(upload_to='documents/%Y/%m/%d', default=None, blank=True, null=True)
-    docfile = models.FileField(upload_to='documents/%Y/%m/%d', default=None, blank=True)
-    #created_date = models.DateTimeField(default=timezone.now())
-    # def __unicode__(self):
-    #     return self.docfile
+

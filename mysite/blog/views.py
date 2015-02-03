@@ -8,8 +8,6 @@ from django.contrib import auth
 # from django.core.content_processors import csrf
 
 
-from .models import Document
-from .forms import DocumentForm
 from .models import Post
 from .forms import PostForm
 from .models import Userlog
@@ -34,34 +32,24 @@ def post_new(request):
             post = form.save(commit=False)
             #post.author = request.user
             post.save()
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
             print "mish"
             return HttpResponseRedirect(reverse(post_detail, kwargs={'pk': post.pk}))
         
         #upload button    
-        formUpload = DocumentForm(request.POST, request.FILES)
-        if formUpload.is_valid():
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
-            print "mish22"
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(".")    
+        
             
     else:
         form = PostForm()
-        formUpload = DocumentForm() # A empty, unbound form
 
     # Load documents for the list page
     #documents = Document.objects.all()
     #documents = Document.objects.order_by('documents/%Y/%m/%d').first()
     #documents = Document.objects.latest('pub_date')
-    documents = Document.objects.order_by('id').reverse()[:1]
         
    # return render(request, 'blog/post_edit.html', {'form': form})
     return render_to_response(
     'blog/post_edit.html',
-    {'documents': documents, 'formUpload': formUpload, 'form': form},
+    {'form': form},
     context_instance=RequestContext(request)
     )
         
@@ -99,24 +87,13 @@ def post_edit(request, pk):
 # mish v1 upload image    
 def list(request):
     # Handle file upload
-    if request.method == 'POST':
-        formUpload = DocumentForm(request.POST, request.FILES)
-        if formUpload.is_valid():
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
-
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('mysite.blog.views.list'))
-    else:
-        formUpload = DocumentForm() # A empty, unbound form
+   
 
     # Load documents for the list page
-    documents = Document.objects.all()
 
     # Render list page with the documents and the form
     return render_to_response(
         'blog/post_edit.html',
-        {'documents': documents, 'formUpload': formUpload},
         context_instance=RequestContext(request)
     )
     
@@ -142,8 +119,6 @@ def Home(request):
             post = form.save(commit=False)
             #post.author = request.user
             post.save()
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
             return HttpResponseRedirect(".")   
             #return HttpResponseRedirect(reverse(post_detail, kwargs={'pk': post.pk}))
         

@@ -8,7 +8,7 @@ from .models import Userlog
 
 class UserlogForm(forms.ModelForm):
     
-    UserName = forms.DateField(label='帳號')
+    UserName = forms.CharField(label='帳號')
     password = forms.CharField(widget=forms.PasswordInput,label='密碼')
     class Meta:
         model = Userlog
@@ -33,7 +33,4 @@ class PostForm(forms.ModelForm):
 
         
 
-class DocumentForm(forms.Form):
-    docfile = forms.FileField(
-        label='Select a file'
-    )    
+
