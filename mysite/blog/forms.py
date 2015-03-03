@@ -5,6 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import Post
 from .models import Userlog
+from django.contrib.auth.models import User
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
 
 class UserlogForm(forms.ModelForm):
     
