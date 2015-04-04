@@ -1,0 +1,57 @@
+#main {
+  margin-top: 60px;
+
+  margin-bottom: 60px;
+  position: relative;
+}
+
+/**
+ * Grid container
+ */
+#tiles {
+  list-style-type: none;
+  position: relative; /** Needed to ensure items are laid out relative to this container **/
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Grid items
+ */
+#tiles li {
+  width: 316px;
+  background-color: #ffffff;
+  border: 1px solid #dedede;
+          border-radius: 2px;
+     -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  display: none; /** Hide items initially to avoid a flicker effect **/
+  cursor: pointer;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 50px;
+}
+
+#tiles li.inactive {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#tiles li img {
+  display: block;
+}
+
+/**
+ * Grid item text
+ */
+
+
+#pin{
+  width:50px;
+  height:50px;
+  padding-bottom:10px;
+  margin:0px auto;
+}
+#con{
+ text-align:center;
+}
