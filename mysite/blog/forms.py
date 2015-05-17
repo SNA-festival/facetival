@@ -6,23 +6,30 @@ from django.utils.translation import ugettext_lazy as _
 from .models import Post
 from .models import Userlog
 from django.contrib.auth.models import User
+from datetime import date
 
 
 class UserForm(ModelForm):
+    username = forms.CharField(label='帳號')
+    password = forms.CharField(widget=forms.PasswordInput,label='密碼')
+    email = forms.CharField(label='信箱')
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'password', 'email')
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
 
 class UserlogForm(forms.ModelForm):
     
-    UserName = forms.CharField(label='帳號')
-    password = forms.CharField(widget=forms.PasswordInput,label='密碼')
+    usernameLog = forms.CharField(label='帳號')
+    passwordLog = forms.CharField(widget=forms.PasswordInput,label='密碼')
     class Meta:
         model = Userlog
-        fields = ('UserName','password')
+        fields = ('usernameLog','passwordLog')
         
         widgets = {
-            'password': forms.PasswordInput(),
+            'passwordLog': forms.PasswordInput(),
         }
         
         
@@ -30,7 +37,7 @@ class UserlogForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
 
     docfile = forms.FileField(label='')
-    set_date = forms.DateField(label='節慶日期')
+    set_date = forms.DateField(label='節慶日期', initial=date.today())
     festival_name = forms.CharField(label='節慶名稱')
     festival_story= forms.CharField(label='節慶故事',widget=forms.Textarea)
     class Meta:

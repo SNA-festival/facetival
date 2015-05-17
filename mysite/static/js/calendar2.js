@@ -24,7 +24,7 @@ var date = currentMonth;//.slice(1,2);
 $(document).ready(function(){
 
     $("#background").fadeIn(1000);
-    createCalendar(); alert(65);
+    createCalendar(); //alert(65);
     inithide();
     uploadimg();
 
@@ -124,13 +124,15 @@ function createCalendar(){
             $(this).css({borderColor:'#ccc',
             boxShadow: '#ddd 2px 2px'})
         }
-    );       
-    //showevent();  alert(66);
+    );    
+    
+    //rdia 抓資料的地方好像很容易出錯~~ 15/3/21
+    showevent();  
     //display calender after it's built
     $('#calendar').css('display', 'block');    
     
     
-     alert(67);
+     
 }
 function fadeoutnext(){
     $('#calendar').fadeOut(800);
@@ -182,20 +184,41 @@ function showevent(){
              whatmon[i]=12;
         }
         
+        
         if ($('.date')[i].innerHTML.charAt(6)==","){
-            whatdday[i]= $('.date')[i].innerHTML.substring(5,6);
-            
+            if(whatmon[i]==4){
+                whatdday[i]= $('.date')[i].innerHTML.substring(4,6);
+            }
+            else{
+                whatdday[i]= $('.date')[i].innerHTML.substring(5,6);
+            }
         }    
         if ($('.date')[i].innerHTML.charAt(7)==","){
-            whatdday[i]= $('.date')[i].innerHTML.substring(5,7);
+            if(whatmon[i]==3 || whatmon[i]==2){
+                whatdday[i]= $('.date')[i].innerHTML.substring(6,7);
+            }
+            else{
+                whatdday[i]= $('.date')[i].innerHTML.substring(5,7);
+            }
+        }
+        
+        if ($('.date')[i].innerHTML.charAt(8)==","){
+            whatdday[i]= $('.date')[i].innerHTML.substring(6,8);
             
         }
+        
         printthis[i]="day"+whatdday[i];
+        
+        // window.alert(printthis[i]);
        
        
         newelem[i]=document.createElement("div");
         newelem[i].setAttribute("id","newelem"+i);
         newelem[i].setAttribute("class","itemname");
+        //document.getElementById(printthis[i]).appendChild(newelem[i]);
+       // alter();
+        //document.write(newelem[i]);
+        //window.alert(newelem[i]);
   
         if(whatmon[i]==currentMonth){
 
@@ -210,7 +233,7 @@ function showevent(){
                     if($('.post')[i].innerHTML!=$('.post')[j].innerHTML){
                         document.getElementById(printthis[i]).appendChild(newelem[i]);
                         $('#newelem'+i).append('<div class="namebg"><a id="'+$('.post')[i].innerHTML+'" href="#showimg" class="dt" onClick="photowall(this.id)">'+$('.post')[i].innerHTML+'</a></div>');
-                        break;
+                       break;
                     }
                 }
             }
@@ -306,7 +329,7 @@ function changenextMonth(){
         lastDateOfMonth = new Date(currentYear, currentMonth+1, 0).getDate();    
         monthSelector = currentYear+'-'+(new Date(currentYear,currentMonth).getMonth());
         $('#calendar').html('');
-        $("#main").css("display","none");
+        $("#main").css("display","none");//======================================
         $('#calendar').fadeIn(800);
         $('.del').remove();
         createCalendar();

@@ -5,6 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
 # from django.core.content_processors import csrf
 
 
@@ -12,6 +15,7 @@ from .models import Post
 from .forms import PostForm
 from .models import Userlog
 from .forms import UserlogForm
+from .forms import UserForm
 
 
     
@@ -101,17 +105,61 @@ def Home(request):
     #posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     #return render(request, 'blog/post_draft_list.html', {'posts': posts}) 
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    users = User.objects.filter()
+    loginform = UserForm(request.POST)
+    userlog = UserlogForm(request.POST)
+    
+    username = request.POST.get('username', None)
+    password = request.POST.get('password', None)
+    email = request.POST.get('email', None)
+    
+    
+    usernameLog = request.POST.get('usernameLog', 'X')
+    passwordLog = request.POST.get('passwordLog', 'X')
+    
+    
+    
+    
     
     if request.method == "POST":
         
-        Loginform = PostForm(request.POST)
-        if Loginform.is_valid():
-            # login = Loginform.save(commit=False)
-            # login.save()
-            
-            return HttpResponseRedirect("ok!")   
         
-        Userlog = UserlogForm(request.POST)
+        #login
+        
+        if usernameLog and passwordLog:
+            
+            
+            user = authenticate(username=usernameLog, password=passwordLog)
+            if user is not None:
+                # the password verified for the user
+                if user.is_active:
+                    login(request, user)
+                    print "User is valid, active and authenticated"
+                else:
+                    print ("The account has been disabled!")
+            else:
+                logout(request)
+                print "mish~~"
+                # the authentication system was unable to verify the username and password
+                print ("The password was incorrect.")
+                
+        #else:
+            
+            
+            
+        #register
+        if username and password and email:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            user = authenticate(username=username, password=password)
+            if user.is_active:
+                    login(request, user)
+                    print "User is valid, active and authenticated"
+            else:
+                print ("The account has been disabled!")
+            return HttpResponseRedirect(".")   
+        
+     
         
         #save button
         form = PostForm(request.POST, request.FILES)
@@ -121,6 +169,9 @@ def Home(request):
             post.save()
             return HttpResponseRedirect(".")   
             #return HttpResponseRedirect(reverse(post_detail, kwargs={'pk': post.pk}))
+            
+            
+        
         
         #upload button    
         # formUpload = DocumentForm(request.POST, request.FILES)
@@ -133,7 +184,9 @@ def Home(request):
             
     else:
         form = PostForm()
-        Userlog = UserlogForm()
+       #Userlog = UserlogForm()
+        userlog = UserlogForm()
+        loginform = UserForm()
         #formUpload = DocumentForm() # A empty, unbound form
 
     # Load documents for the list page
@@ -144,9 +197,7 @@ def Home(request):
     
     # c={}
     # c.update(csrf(request))
-    # username = request.POST.get('username','')
-    # password = request.POST.get('password','')
-    # user = auth.authenticate(usrername=username, password=password)
+    
     
     # if user is not None:
     #     auth.login(request, user)
@@ -158,6 +209,7 @@ def Home(request):
  
     return render_to_response(
     'blog/HomePage.html',
-    {'Userlog': Userlog, 'posts': posts, 'form': form},
+    {'userlog': userlog, 'loginform': loginform, 'posts': posts, 'form': form, 'users': users},
+    # { 'posts': posts, 'form': form},
     context_instance=RequestContext(request)
     )

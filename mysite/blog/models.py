@@ -2,25 +2,32 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.forms import ModelForm, Textarea
+from datetime import datetime 
+
+
+
 
 class Userlog(models.Model):
     
     #author = models.ForeignKey(User)
-    author =  models.CharField(max_length=10)
-    password =  models.CharField(max_length=10)
+    usernameLog =  models.CharField(max_length=10)
+    passwordLog =  models.CharField(max_length=10)
         #self.save()
 
     def __unicode__(self):
-        return self.author
+        return self.usernameLog
+        
+        
+
 
 
 # Create your models here.
 class Post(models.Model):
     
     festival_name = models.CharField(max_length=200)
-    set_date = models.DateField(default=timezone.now())
-    
-    created_date = models.DateTimeField(default=timezone.now())
+    #set_date = models.DateField(default=timezone.now())
+    set_date = models.DateField()
+    created_date = models.DateTimeField(default=datetime.now)
     published_date = models.DateTimeField(blank=True, null=True)
     festival_story = models.TextField(default=None)
     

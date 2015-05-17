@@ -40,7 +40,20 @@
 	<script type="text/javascript" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	
  
-	
+	<!--{% if users %} 	-->
+ <!-- 	{% for user in users %}-->
+  	
+ <!--   <p>{{user.username}}</p>-->
+    
+ <!--   <p>{{UsingUser.username}}</p>-->
+    
+ <!--   {% endfor %}  -->
+    
+ <!--  	{% else %}-->
+ <!-- 		<p>No documents.</p>-->
+ <!-- {% endif %}-->
+  
+
 
   	
   	
@@ -49,8 +62,8 @@
   	
     <p class="post">{{ post.festival_name }}</p>
     <p class="date">{{ post.set_date }}</p>
-    <p class="file">http://facetival-mishchen.c9.io/media/{{ post.docfile }}</p>
-    <p class="articleURL">http://facetival-mishchen.c9.io/{{ post.pk }}</p>
+    <p class="file">http://facetival-mishchen-1.c9.io/media/{{ post.docfile }}</p>
+    <p class="articleURL">http://facetival-mishchen-1.c9.io/{{ post.pk }}</p>
     <p class="story">{{ post.festival_story }}</p>
     
     {% endfor %}  
@@ -64,7 +77,22 @@
   
   <div>
     <div id="background">
-    	<div id="calendar"></div>
+    	
+    	<div id="calendar">
+    	  
+    	  <!--<div id="header"></div>-->
+    	  <!--<div id="week"></div>-->
+    	  <!--<div id="month"></div>-->
+    	  <!--<div id="month">-->
+    	    <!--<div id="day10" class="dayBox main">-->
+    	    
+    	    <!-- <span class="date">mish123</span>-->
+    	    <!--</div>-->
+    	    
+    	  <!--</div>-->
+    	</div>
+    	 
+    	  
     </div>
     <div class="container"  id="main">
       <ul id="tiles">
@@ -158,19 +186,40 @@
         </div>
         <div class="modal-body">
           
-          <form method="POST" class="post-form"  enctype="multipart/form-data">{% csrf_token %}
-            {{ Userlog.as_p }}
-            
-            <div class="login_b" >
-    					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true" >
-    					</fb:login-button>
-  					</div>
-      		  <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">Close</button>
           
-              <button type="submit" name="save" class="save btn btn-primary">Save</button>
+          <form method="POST" class="post-form"  enctype="multipart/form-data">{% csrf_token %}  
+            {% if user.is_authenticated %}
+              <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+              
+              
+              
+              
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">取消</button>
+              
+                  <button type="submit" name="save" class="save btn btn-primary">登出</button>
+                </div> 
+            {% else %}
+              <p>Welcome, new user. Please log in.</p>
+              
+                {{ userlog.as_p }}
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">取消</button>
+              
+                  <button type="submit" name="save" class="save btn btn-primary">登入</button>
+                </div> 
+               
+                
+            {% endif %}
+          </form>   
+       <!--     <div class="login_b" >-->
+    			<!--		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true" >-->
+    			<!--		</fb:login-button>-->
+  					<!--</div>-->
+      		  <div class="modal-footer">
+             
             </div> 
-        </form>
+        
  
         </div>
         
@@ -182,28 +231,31 @@
 
 <!--註冊-->
 <div class="container">
-  <div class="modal fade" id="userlog" tabindex="-1" role="dialog" aria-labelledby="Modalimg" aria-hidden="true">
+  <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="Modalimg" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="Modalimg">登入&登出~~</h4>
+          <h4 class="modal-title" id="Modalimg">註冊</h4>
         </div>
         <div class="modal-body">
           
           <form method="POST" class="post-form"  enctype="multipart/form-data">{% csrf_token %}
-            {{ Userlog.as_p }}
             
-            <div class="login_b" >
-    					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true" >
-    					</fb:login-button>
-  					</div>
+            {{ loginform.as_p }}
+            <!--{{ UserForm.as_p }}-->
+            
+            <!--<div class="login_b" >-->
+              <!--//fblogin js should be modified-->
+    					<!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true" >-->
+    					<!--</fb:login-button>-->
+  					<!--</div>-->
+  					
       		  <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">Close</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearimg()">取消</button>
           
-              <button type="submit" name="save" class="save btn btn-primary">Save</button>
+              <button type="submit" name="save" class="save btn btn-primary">註冊</button>
             </div> 
-            
             
             
         </form>
